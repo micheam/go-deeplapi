@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bufio"
+	"bytes"
 	"context"
 	"flag"
 	"fmt"
@@ -19,13 +21,35 @@ var (
 func main() {
 	flag.Parse()
 
+	var err error
 	ctx := context.Background()
 	svc := deeplapi.NewTextTranslatingService(deeplapi.New(*authKey))
 	source := deeplapi.ParseLang(*sourceLang)
 	target := deeplapi.ParseLang(*targetLang)
-	result, err := svc.TraslateSingleText(ctx, flag.Arg(0), source, target)
+
+	text := flag.Arg(0)
+	if len(text) == 0 {
+		text, err = scanStdin()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	result, err := svc.TraslateSingleText(ctx, text, source, target)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	fmt.Println(result.Text)
+}
+
+func scanStdin() (string, error) {
+	scanner := bufio.NewScanner(os.Stdin)
+	buf := new(bytes.Buffer)
+	for scanner.Scan() {
+		buf.Write(scanner.Bytes())
+	}
+	if err := scanner.Err(); err != nil {
+		return "", err
+	}
+	return buf.String(), nil
 }
