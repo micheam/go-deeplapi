@@ -44,25 +44,74 @@ func (l Lang) String() string {
 		"RU", "SK", "SL", "SV", "ZH"}[l]
 }
 
+func (l Lang) DispName() string {
+	return [...]string{
+		"NotSet", "Bulgarian", "Czech", "Danish", "German",
+		"Greek", "English", "Spanish", "Estonian", "Finnish",
+		"French", "Hungarian", "Italian", "Japanese", "Lithuanian",
+		"Latvian", "Dutch", "Polish", "Portuguese", "Romanian",
+		"Russian", "Slovak", "Slovenian", "Swedish", "Chinese",
+	}[l]
+}
+
+var allLang = []Lang{
+	LangNotSet,
+	LangBulgarian,
+	LangCzech,
+	LangDanish,
+	LangGerman,
+	LangGreek,
+	LangEnglish,
+	LangSpanish,
+	LangEstonian,
+	LangFinnish,
+	LangFrench,
+	LangHungarian,
+	LangItalian,
+	LangJapanese,
+	LangLithuanian,
+	LangLatvian,
+	LangDutch,
+	LangPolish,
+	LangPortuguese,
+	LangRomanian,
+	LangRussian,
+	LangSlovak,
+	LangSlovenian,
+	LangSwedish,
+	LangChinese,
+}
+
+func LangList() <-chan Lang {
+	c := make(chan Lang)
+	go func() {
+		for _, l := range allLang {
+			c <- l
+		}
+		close(c)
+	}()
+	return c
+}
+
 func ParseLang(s string) Lang {
-	switch strings.ToLower(s) {
+	switch strings.ToUpper(s) {
 	default:
 		return LangNotSet
-	case "bg":
+	case "BG":
 		return LangBulgarian
-	case "cs":
+	case "CS":
 		return LangCzech
-	case "da":
+	case "DA":
 		return LangDanish
-	case "de":
+	case "DE":
 		return LangGerman
-	case "el":
+	case "EL":
 		return LangGreek
-	case "en":
+	case "EN":
 		return LangEnglish
-	case "es":
+	case "ES":
 		return LangSpanish
-	case "et":
+	case "ET":
 		return LangEstonian
 	case "FI":
 		return LangFinnish
