@@ -23,71 +23,70 @@ const PathTextTranslating = "translate"
 //
 // Request Parameters:
 //
-//   *text*
+//	*text*
 //
-//   (Required) Text to be translated. Only UTF8-encoded plain text is supported.
-//   The parameter may be specified multiple times and translations are returned
-//   in the same order as they are requested. Each of the parameter values may contain
-//   multiple sentences. Up to 50 texts can be sent for translation in one request.
-//
-//
-//   *source_lang*
-//
-//   (Optional) Language of the text to be translated.
-//   If this parameter is omitted, the API will attempt to detect the language of the text and translate it.
+//	(Required) Text to be translated. Only UTF8-encoded plain text is supported.
+//	The parameter may be specified multiple times and translations are returned
+//	in the same order as they are requested. Each of the parameter values may contain
+//	multiple sentences. Up to 50 texts can be sent for translation in one request.
 //
 //
-//   *target_lang*
+//	*source_lang*
 //
-//   (Required) The language into which the text should be translated.
-//
-//
-//   *split_sentences*
-//
-//   (Optional) Sets whether the translation engine should first split the input into sentences.
-//   This is enabled by default. Possible values are:
-//
-//       * "0"           - no splitting at all, whole input is treated as one sentence
-//       * "1" (default) - splits on interpunction and on newlines
-//       * "nonewlines"  - splits on interpunction only, ignoring newlines
-//
-//   For applications that send one sentence per text parameter, it is advisable to set split_sentences=0,
-//   in order to prevent the engine from splitting the sentence unintentionally.
+//	(Optional) Language of the text to be translated.
+//	If this parameter is omitted, the API will attempt to detect the language of the text and translate it.
 //
 //
-//   *preserve_formatting*
+//	*target_lang*
 //
-//   (Optional) Sets whether the translation engine should respect the original formatting,
-//   even if it would usually correct some aspects. Possible values are:
-//
-//       * "0" (default)
-//       * "1"
-//
-//   The formatting aspects affected by this setting include:
-//
-//       * Punctuation at the beginning and end of the sentence
-//       * Upper/lower case at the beginning of the sentence
+//	(Required) The language into which the text should be translated.
 //
 //
-//   *formality*
+//	*split_sentences*
 //
-//   (Optional) Sets whether the translated text should lean towards formal or informal language.
-//   This feature currently only works for target languages
-//   "DE" (German), "FR" (French), "IT" (Italian), "ES" (Spanish),
-//   "NL" (Dutch) , "PL" (Polish), "PT-PT"       , "PT-BR" (Portuguese) and "RU" (Russian).
+//	(Optional) Sets whether the translation engine should first split the input into sentences.
+//	This is enabled by default. Possible values are:
 //
-//   Possible options are:
+//	    * "0"           - no splitting at all, whole input is treated as one sentence
+//	    * "1" (default) - splits on interpunction and on newlines
+//	    * "nonewlines"  - splits on interpunction only, ignoring newlines
 //
-//       * "default" (default)
-//       * "more" - for a more formal language
-//       * "less" - for a more informal language
+//	For applications that send one sentence per text parameter, it is advisable to set split_sentences=0,
+//	in order to prevent the engine from splitting the sentence unintentionally.
 //
 //
-//   *glossary_id*
+//	*preserve_formatting*
 //
-//   (Optional) Specify the glossary to use for the translation.  Important: This requires the source_lang parameter
-//   to be set and the language pair of the glossary has to match the language pair of the request.
+//	(Optional) Sets whether the translation engine should respect the original formatting,
+//	even if it would usually correct some aspects. Possible values are:
 //
+//	    * "0" (default)
+//	    * "1"
+//
+//	The formatting aspects affected by this setting include:
+//
+//	    * Punctuation at the beginning and end of the sentence
+//	    * Upper/lower case at the beginning of the sentence
+//
+//
+//	*formality*
+//
+//	(Optional) Sets whether the translated text should lean towards formal or informal language.
+//	This feature currently only works for target languages
+//	"DE" (German), "FR" (French), "IT" (Italian), "ES" (Spanish),
+//	"NL" (Dutch) , "PL" (Polish), "PT-PT"       , "PT-BR" (Portuguese) and "RU" (Russian).
+//
+//	Possible options are:
+//
+//	    * "default" (default)
+//	    * "more" - for a more formal language
+//	    * "less" - for a more informal language
+//
+//
+//	*glossary_id*
+//
+//	(Optional) Specify the glossary to use for the translation.  Important: This requires the source_lang parameter
+//	to be set and the language pair of the glossary has to match the language pair of the request.
 type TextTranslatingService struct {
 	client *Client
 }
@@ -111,7 +110,7 @@ type TraslateSingleTextResult struct {
 }
 
 func (t TextTranslatingService) TraslateSingleText(ctx context.Context, text string, source, target Lang) (*TraslateSingleTextResult, error) {
-	_url := strings.Join([]string{BaseURL, APIVersion, PathTextTranslating}, "/")
+	_url := strings.Join([]string{BaseURL(), APIVersion, PathTextTranslating}, "/")
 	param := url.Values{
 		"text":        []string{text},
 		"target_lang": []string{target.String()},

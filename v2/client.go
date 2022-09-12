@@ -10,12 +10,35 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"sync"
 )
 
-const (
-	APIVersion = "v2"
-	BaseURL    = "https://api-free.deepl.com" // TODO(micheam): may need to switch if we have a Pro-Account 🤔
+const APIVersion string = "v2"
+
+var (
+	domain = "api.deepl.com"
+	mux    = new(sync.RWMutex)
 )
+
+func Domain() string {
+	mux.RLock()
+	defer mux.RUnlock()
+	return domain
+}
+
+// SetDomain
+//
+// - 'api.deepl.com' for pro account
+// - 'api-free.deepl.com' for free account
+func SetDomain(url_ string) {
+	mux.Lock()
+	defer mux.Unlock()
+	domain = url_
+}
+
+func BaseURL() string {
+	return "https://" + Domain()
+}
 
 // =================================================
 // API Client

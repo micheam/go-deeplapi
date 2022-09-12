@@ -17,8 +17,8 @@ var (
 	authKey    = flag.String("auth-key", os.Getenv("DEEPL_AUTH_KEY"), "Authentication Key for DeepL API.")
 	sourceLang = flag.String("source", "", "LANG_CODE of the text to be translated. If it is omitted, it will be determined automatically.")
 	targetLang = flag.String("target", deeplapi.LangEnglish.String(), "LANG_CODE of the text to be translated.")
-
-	langList = flag.Bool("list-lang", false, "Display a list of LANG_CODE that can be specified.")
+	apidomain  = flag.String("api-domain", os.Getenv("DEEPL_API_DOMAIN"), "use '"+deeplapi.Domain()+"' if not set")
+	langList   = flag.Bool("list-lang", false, "Display a list of LANG_CODE that can be specified.")
 )
 
 func Usage() {
@@ -27,6 +27,9 @@ func Usage() {
 	fmt.Fprintf(os.Stderr, "  translate [flags] [text]\n")
 
 	fmt.Fprintf(os.Stderr, "Flags:\n")
+	fmt.Fprintf(os.Stderr, "  --api-domain string\n")
+	fmt.Fprintf(os.Stderr, "  \tDomain for DeepL API. (Default) Environment variable: 'DEEPL_API_DOMAIN'\n")
+	fmt.Fprintf(os.Stderr, "  \tUse '"+deeplapi.Domain()+"' if not set.\n")
 	fmt.Fprintf(os.Stderr, "  --auth-key string\n")
 	fmt.Fprintf(os.Stderr, "  \tAuthentication Key for DeepL API. (Default) Environment variable: 'DEEPL_AUTH_KEY'\n")
 	fmt.Fprintf(os.Stderr, "  --list-lang\n")
@@ -39,6 +42,7 @@ func Usage() {
 	fmt.Fprintf(os.Stderr, "Examples:\n")
 	fmt.Fprintf(os.Stderr, "  $ translate --soruce ja --taget en 'あんなこといいな。できたらいいな'\n")
 	fmt.Fprintf(os.Stderr, "  $ echo 'あんなこといいな。できたらいいな' | translate # source lang will auto-detected\n")
+
 	// flag.PrintDefaults()
 }
 
@@ -53,6 +57,11 @@ func main() {
 	if *langList {
 		printLangList()
 		os.Exit(0)
+	}
+
+	// Set Deepl API Domain
+	if *apidomain != "" {
+		deeplapi.SetDomain(*apidomain)
 	}
 
 	svc := deeplapi.NewTextTranslatingService(deeplapi.New(*authKey))
