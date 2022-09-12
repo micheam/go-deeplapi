@@ -25,7 +25,7 @@ import "errors"
 //   GET /v2/translate?text=Translate it HTTP/1.0
 //   Host: api-free.deepl.com
 //   User-Agent: YourApp
-//   Authorization: DeepL-Auth-Key f3ddf932-c69c-b631-172a-7b78d8eb825d:fx
+//   Authorization: DeepL-Auth-Key f9999999-c999-b999-1999-799999999999
 //   Accept: application/json
 //
 //   { "message": "Parameter 'target_lang' not specified." }
