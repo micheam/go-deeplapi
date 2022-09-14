@@ -1,3 +1,3 @@
 module github.com/micheam/go-deeplapi
 
-go 1.16
+go 1.19
