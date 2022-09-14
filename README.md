@@ -9,6 +9,9 @@ $ go install github.com/micheam/go-deeplapi/cmd/translate@latest
 ```
 
 ```sh
+$ export DEEPL_AUTH_KEY="<YOUR-DEEPL-AUTH-KEY>"
+$ export DEEPL_API_DOMEIN="api-free.deepl.com" # for free plan
+
 $ translate こんにちわ、世界
 Hello, World
 ```
