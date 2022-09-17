@@ -40,7 +40,7 @@ func Usage() {
 	fmt.Fprintf(os.Stderr, "  \tLANG_CODE of the text to be translated. (default 'EN')\n")
 
 	fmt.Fprintf(os.Stderr, "Examples:\n")
-	fmt.Fprintf(os.Stderr, "  $ translate --soruce ja --taget en 'あんなこといいな。できたらいいな'\n")
+	fmt.Fprintf(os.Stderr, "  $ translate --source ja --target en 'あんなこといいな。できたらいいな'\n")
 	fmt.Fprintf(os.Stderr, "  $ echo 'あんなこといいな。できたらいいな' | translate # source lang will auto-detected\n")
 
 	// flag.PrintDefaults()
