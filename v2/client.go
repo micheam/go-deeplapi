@@ -79,7 +79,6 @@ func (c *Client) doRequest(ctx context.Context, method, _url string, body io.Rea
 
 	if resp.StatusCode != http.StatusOK { // TODO(micheam): Handle errors
 		b := new(bytes.Buffer)
-		_, _ = b.ReadFrom(resp.Body)
 		log.Printf("doRequest: %s: %s\n", resp.Status, b.String())
 		return nil, errors.New(resp.Status)
 	}

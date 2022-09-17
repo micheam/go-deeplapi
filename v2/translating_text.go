@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -111,7 +110,6 @@ type TraslateSingleTextResult struct {
 }
 
 func (t TextTranslatingService) TraslateSingleText(ctx context.Context, text string, source, target Lang) (*TraslateSingleTextResult, error) {
-	log.Println("base url: " + BaseURL())
 	_url := strings.Join([]string{BaseURL(), APIVersion, PathTextTranslating}, "/")
 	param := url.Values{
 		"text":        []string{text},
